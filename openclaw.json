@@ -1,0 +1,37 @@
+{
+  "name": "automation-testing-agent",
+  "version": "1.0.0",
+  "description": "Runs end-to-end browser tests for the My Agents flow, including login, positive and negative checks, failure evidence, bug reports, and final results.",
+  "agent_metadata": {
+    "agent_name": "automation-testing-agent",
+    "agent_id": "automation-testing-agent",
+    "avatar": "🤖",
+    "tone": "professional, precise, test-focused",
+    "domain": "web application testing",
+    "primary_users": "QA testers and product/engineering reviewers",
+    "automation_type": "on_demand",
+    "schedule_description": "Run when asked to test the My Agents feature."
+  },
+  "skills": [
+    "browser-login",
+    "flow-execution",
+    "validation-checks",
+    "evidence-capture",
+    "bug-reporting",
+    "result-summary"
+  ],
+  "workflows": {
+    "main": "workflows/main.yaml"
+  },
+  "cron": {},
+  "env": {
+    "required": [
+      "APP_URL",
+      "APP_USERNAME",
+      "APP_PASSWORD",
+      "FEATURE_NAME",
+      "WEB_BROWSER",
+      "RESULTS_REPORT"
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+infrastructure:
+  - key: OPENCLAW_RUNTIME
+    label: OpenClaw runtime marker
+    required: false
+    secret: false
+    platform_managed: true
+    description: Fixed runtime marker used by the OpenClaw environment.
+  - key: PG_CONNECTION_STRING
+    label: PostgreSQL connection string
+    required: false
+    secret: true
+    platform_managed: true
+    description: "Platform-managed database connection string for result persistence."
+  - key: ORG_ID
+    label: Organization ID
+    required: false
+    secret: false
+    platform_managed: true
+    description: "Platform-managed organization identifier."
+  - key: AGENT_ID
+    label: Agent ID
+    required: false
+    secret: false
+    platform_managed: true
+    description: "Platform-managed agent identifier."
+  - key: RUN_ID
+    label: Run ID
+    required: false
+    secret: false
+    platform_managed: true
+    description: "Platform-managed execution identifier."
+  - key: BROWSER_HEADLESS
+    label: Browser headless mode
+    required: false
+    secret: false
+    platform_managed: false
+    description: Set to true to run the browser without a visible window.
+connector:
+  - key: APP_URL
+    label: App URL
+    required: true
+    secret: false
+    platform_managed: false
+    description: Target application URL to open for the test run.
+    how_to_get_steps:
+      - "Open https://app.rapidinnovation.dev/my-agents in your browser"
+      - Copy the full page URL from the address bar
+      - Paste it into the App URL field above
+    site_url: "https://app.rapidinnovation.dev"
+    provider_doc_url: "https://app.rapidinnovation.dev/"
+  - key: APP_USERNAME
+    label: Username or email
+    required: true
+    secret: true
+    platform_managed: false
+    description: Username or email used to sign in to the app.
+    how_to_get_steps:
+      - Open the credentials provided for this test run
+      - Find the username or email value
+      - Copy the username or email and paste it into the field above
+    site_url: "https://app.rapidinnovation.dev"
+    provider_doc_url: "https://app.rapidinnovation.dev/"
+  - key: APP_PASSWORD
+    label: Password
+    required: true
+    secret: true
+    platform_managed: false
+    description: Password used to sign in to the app.
+    how_to_get_steps:
+      - Open the credentials provided for this test run
+      - Find the password value
+      - Copy the password and paste it into the field above
+    site_url: "https://app.rapidinnovation.dev"
+    provider_doc_url: "https://app.rapidinnovation.dev/"
+  - key: FEATURE_NAME
+    label: Feature name
+    required: true
+    secret: false
+    platform_managed: false
+    description: Name of the feature to test in the authenticated app.
+    how_to_get_steps:
+      - Open the test request details provided for this run
+      - Find the feature name value
+      - Copy the feature name and paste it into the field above
+    site_url: "https://app.rapidinnovation.dev"
+    provider_doc_url: "https://app.rapidinnovation.dev/"
+channel:
+  - key: WEB_BROWSER
+    label: Web browser
+    required: true
+    secret: false
+    platform_managed: false
+    description: Browser channel used to interact with the application UI.
+    how_to_get_steps:
+      - Open the browser runtime or browser tab used by the agent
+      - Watch the app pages load and the actions run in the UI
+      - Use this channel to inspect page behavior during the test
+    site_url: "https://openclaw.ai"
+    provider_doc_url: "https://openclaw.ai/docs"
+  - key: RESULTS_REPORT
+    label: Results report
+    required: true
+    secret: false
+    platform_managed: false
+    description: "Final report channel for pass/fail output, bugs, and evidence references."
+    how_to_get_steps:
+      - Open the final execution summary produced by the agent
+      - "Review the step outcomes, bug reports, and evidence links"
+      - Use this channel to share the test result with the requester
+    site_url: "https://openclaw.ai"
+    provider_doc_url: "https://openclaw.ai/docs"

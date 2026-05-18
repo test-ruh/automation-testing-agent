@@ -1,0 +1,30 @@
+name: main
+args:
+  run_id:
+    default: $(uuidgen)
+env:
+  RUN_ID: ${run_id}
+  PG_CONNECTION_STRING: ${PG_CONNECTION_STRING}
+  ORG_ID: ${ORG_ID}
+  AGENT_ID: ${AGENT_ID}
+steps:
+  - id: provision-schema
+    run: python3 scripts/data_writer.py provision
+    timeout_ms: 30000
+  - id: browser-login
+    run: bash skills/browser-login/scripts/run.sh
+  - id: flow-execution
+    run: bash skills/flow-execution/scripts/run.sh
+    stdin: true
+  - id: validation-checks
+    run: bash skills/validation-checks/scripts/run.sh
+    stdin: true
+  - id: evidence-capture
+    run: bash skills/evidence-capture/scripts/run.sh
+    stdin: true
+  - id: bug-reporting
+    run: bash skills/bug-reporting/scripts/run.sh
+    stdin: true
+  - id: result-summary
+    run: bash skills/result-summary/scripts/run.sh
+    stdin: true

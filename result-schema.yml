@@ -1,0 +1,243 @@
+version: "1.0"
+agent_id: "automation-testing-agent"
+
+tables:
+  result_test_runs:
+    description: One record per executed test run.
+    writable: true
+    columns:
+      id:
+        type: uuid
+        primary_key: true
+        required: true
+        auto_generate: true
+        description: Primary key.
+      run_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Execution token used by the runtime writer.
+      computed_at:
+        type: datetime
+        required: true
+        description: Timestamp computed by the runtime writer.
+      app_url:
+        type: string
+        required: true
+        max_length: 2048
+        description: Target application URL.
+      feature_name:
+        type: string
+        required: true
+        max_length: 255
+        description: Feature under test.
+      username_or_email:
+        type: string
+        required: true
+        max_length: 255
+        description: Login identity used for the run.
+      status:
+        type: string
+        required: true
+        max_length: 64
+        description: Run status.
+      started_at:
+        type: datetime
+        required: true
+        description: Run start time.
+      finished_at:
+        type: datetime
+        required: true
+        description: Run end time.
+      summary:
+        type: string
+        required: true
+        max_length: 4000
+        description: Final summary.
+      metadata:
+        type: jsonb
+        description: Additional run context.
+    conflict_columns:
+      - app_url
+      - feature_name
+      - started_at
+    indexes:
+      - columns: [started_at]
+        name: idx_result_test_runs_started_at
+  result_test_steps:
+    description: "Step-by-step execution results for a run."
+    writable: true
+    columns:
+      id:
+        type: uuid
+        primary_key: true
+        required: true
+        auto_generate: true
+        description: Primary key.
+      run_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Execution token used by the runtime writer.
+      computed_at:
+        type: datetime
+        required: true
+        description: Timestamp computed by the runtime writer.
+      test_run_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Parent run identifier.
+      step_name:
+        type: string
+        required: true
+        max_length: 255
+        description: Name of the step.
+      step_status:
+        type: string
+        required: true
+        max_length: 64
+        description: Step status.
+      details:
+        type: string
+        required: true
+        max_length: 4000
+        description: Step details.
+      started_at:
+        type: datetime
+        required: true
+        description: Step start time.
+      finished_at:
+        type: datetime
+        required: true
+        description: Step end time.
+      metadata:
+        type: jsonb
+        description: Additional step context.
+    conflict_columns:
+      - test_run_id
+      - step_name
+    indexes:
+      - columns: [test_run_id]
+        name: idx_result_test_steps_test_run_id
+  result_bug_reports:
+    description: Confirmed defects found during testing.
+    writable: true
+    columns:
+      id:
+        type: uuid
+        primary_key: true
+        required: true
+        auto_generate: true
+        description: Primary key.
+      run_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Execution token used by the runtime writer.
+      computed_at:
+        type: datetime
+        required: true
+        description: Timestamp computed by the runtime writer.
+      test_run_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Parent run identifier.
+      title:
+        type: string
+        required: true
+        max_length: 512
+        description: Bug title.
+      severity:
+        type: string
+        required: true
+        max_length: 64
+        description: Bug severity.
+      reproduction_steps:
+        type: string
+        required: true
+        max_length: 4000
+        description: Reproduction steps.
+      expected_result:
+        type: string
+        required: true
+        max_length: 4000
+        description: Expected result.
+      actual_result:
+        type: string
+        required: true
+        max_length: 4000
+        description: Actual result.
+      status:
+        type: string
+        required: true
+        max_length: 64
+        description: Bug status.
+      metadata:
+        type: jsonb
+        description: Additional bug context.
+    conflict_columns:
+      - test_run_id
+      - title
+    indexes:
+      - columns: [test_run_id]
+        name: idx_result_bug_reports_test_run_id
+  result_evidence_assets:
+    description: Screenshots and evidence captured for failed steps.
+    writable: true
+    columns:
+      id:
+        type: uuid
+        primary_key: true
+        required: true
+        auto_generate: true
+        description: Primary key.
+      run_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Execution token used by the runtime writer.
+      computed_at:
+        type: datetime
+        required: true
+        description: Timestamp computed by the runtime writer.
+      test_run_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Parent run identifier.
+      test_step_id:
+        type: string
+        required: true
+        max_length: 128
+        description: Parent step identifier.
+      asset_type:
+        type: string
+        required: true
+        max_length: 64
+        description: Asset type.
+      asset_url:
+        type: string
+        required: true
+        max_length: 2048
+        description: Evidence asset URL.
+      caption:
+        type: string
+        required: true
+        max_length: 512
+        description: Caption.
+      captured_at:
+        type: datetime
+        required: true
+        description: Capture time.
+      metadata:
+        type: jsonb
+        description: Additional evidence context.
+    conflict_columns:
+      - test_run_id
+      - test_step_id
+      - asset_type
+    indexes:
+      - columns: [test_run_id]
+        name: idx_result_evidence_assets_test_run_id
